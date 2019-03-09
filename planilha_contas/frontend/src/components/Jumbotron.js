@@ -1,10 +1,21 @@
-import React, { Component } from 'react';
-import { Button } from 'reactstrap';
+import React, { Component } from 'react'
+import { Button } from 'reactstrap'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { getExtratos } from '../actions/extratos'
 
-export default class Jumbotron extends Component {
+export class Jumbotron extends Component {
+
+	static propTypes = {
+		extratos: PropTypes.array.isRequired
+	}
 
 	goLoginPage() {		
 		window.location.href='/login'
+	}
+
+	componentDidMount() {
+		this.props.getExtratos();
 	}
 
 	render() {
@@ -18,6 +29,12 @@ export default class Jumbotron extends Component {
 					<Button color="primary" onClick={this.goLoginPage}>Acessar</Button>										
 				</div>
 			</div>
-		);
+		)
 	}
 }
+
+const mapStateToProps = state => ({
+	extratos: state.extratos.extratos
+})
+
+export default connect(mapStateToProps, { getExtratos })(Jumbotron)

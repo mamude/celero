@@ -1,0 +1,1 @@
+export const GET_EXTRATOS = 'GET_EXTRATOS'
