@@ -8,6 +8,7 @@ django = "==2.0.13"
 djangorestframework = "*"
 "psycopg2" = "*"
 model-mommy = "*"
+django-rest-knox = "*"
 
 [dev-packages]
 pylint = "*"
