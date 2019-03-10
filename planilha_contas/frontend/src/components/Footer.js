@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export default class Footer extends Component {
 	render() {
@@ -8,6 +8,6 @@ export default class Footer extends Component {
 					© 2019 Copyright <a href="https://www.linkedin.com/in/samirmamude/">samirmamude</a>
 				</div>
 			</footer>
-		)
+		);
 	}
 }
