@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardTitle, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Card, CardBody, CardTitle, Button, Form, FormGroup, Label, Input, Tooltip } from 'reactstrap';
+import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExtrato } from '../../actions/extratos';
@@ -8,7 +9,8 @@ export class Adicionar extends Component {
 	state = {
 		tipo: 'E',
 		descricao: '',
-		valor: ''
+		valor: '',
+		valorFormatado: ''
 	};
 
 	static propTypes = {
@@ -16,6 +18,11 @@ export class Adicionar extends Component {
 	};
 
 	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
+	onValorChange = (values) => {
+		const { formattedValue, value} = values;
+		this.setState({ 'valor': value, 'valorFormatado': formattedValue })
+	}
 	
 	onSubmit = (e) => {
 		e.preventDefault();
@@ -49,8 +56,16 @@ export class Adicionar extends Component {
 								<Input name="descricao" onChange={this.onChange} value={descricao} />
 							</FormGroup>
 							<FormGroup>
-								<Label for="valor">Valor</Label>
-								<Input name="valor" onChange={this.onChange} value={valor} />
+								<Label for="valor">Valor</Label>								
+								<NumberFormat className="form-control"									
+									onValueChange={this.onValorChange}
+									isNumericString={true}
+									value={valor}
+									decimalScale={2}
+									fixedDecimalScale={true}
+									thousandSeparator={true} 
+									prefix="R$ "/>
+								<small className="form-text text-muted">Digite "." para informar os centavos.</small>								
 							</FormGroup>
 							<Button color="primary">Enviar</Button>
 						</Form>
