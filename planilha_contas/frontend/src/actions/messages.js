@@ -9,7 +9,7 @@ export const createMessage = (msg) => {
 };
 
 // Mensagens de erro para usuario
-export const returnErrors = (msg, status) => {
+export const returnErrors = (msg, status) => {	
 	return {
 		type: GET_ERROR,
 		payload: { msg, status }

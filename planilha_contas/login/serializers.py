@@ -17,4 +17,4 @@ class LoginSerializer(serializers.Serializer):
         user = authenticate(**data)
         if user and user.is_active:
             return user
-        raise serializers.ValidationError("Usuário Inválido!")
+        raise serializers.ValidationError("Credenciais de acesso Inválidas!")
