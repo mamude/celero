@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardTitle, Button, Form, FormGroup, Label, Input, Tooltip } from 'reactstrap';
+import { Card, CardBody, CardTitle, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -27,7 +27,7 @@ export class Adicionar extends Component {
 	onSubmit = (e) => {
 		e.preventDefault();
 		const { tipo, descricao, valor } = this.state;
-		const extrato = { tipo, descricao, valor };
+		const extrato = { tipo, descricao, valor };		
 		this.props.addExtrato(extrato);
 		this.setState({
 			tipo: 'E',
@@ -42,7 +42,7 @@ export class Adicionar extends Component {
 			<div className="col-md-6 pt-5 m-auto">
 				<Card>
 					<CardBody>
-						<CardTitle>Adicionar Movimentação</CardTitle>
+						<CardTitle><strong>Adicionar Movimentação</strong></CardTitle>
 						<Form onSubmit={this.onSubmit}>
 							<FormGroup>
 								<Label for="tipo">Tipo Movimentação</Label>
@@ -64,6 +64,7 @@ export class Adicionar extends Component {
 									decimalScale={2}
 									fixedDecimalScale={true}
 									thousandSeparator={true} 
+									allowNegative={false}
 									prefix="R$ "/>
 								<small className="form-text text-muted">Digite "." para informar os centavos.</small>								
 							</FormGroup>

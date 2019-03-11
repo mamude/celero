@@ -33,12 +33,12 @@ export const addExtrato = extrato => (dispatch, getState) => {
 // Excluir Movimentação
 export const deleteExtrato = id => (dispatch, getState) => {
 	axios
-		.delete(`/api/extrato/${id}/`, extrato, tokenConfig(getState))
+		.delete(`/api/extrato/${id}/`, tokenConfig(getState))
 		.then((response) => {
 			dispatch(createMessage({ deleteExtrato: "Movimentação excluída com sucesso!" }))
 			dispatch({
 				type: DELETE_EXTRATO,
-				payload: response.data
+				payload: id
 			});
 		})
 		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
