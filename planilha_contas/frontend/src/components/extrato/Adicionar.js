@@ -6,7 +6,7 @@ import { addExtrato } from '../../actions/extratos';
 
 export class Adicionar extends Component {
 	state = {
-		tipo: '',
+		tipo: 'E',
 		descricao: '',
 		valor: ''
 	};
@@ -16,14 +16,14 @@ export class Adicionar extends Component {
 	};
 
 	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
+	
 	onSubmit = (e) => {
 		e.preventDefault();
 		const { tipo, descricao, valor } = this.state;
 		const extrato = { tipo, descricao, valor };
 		this.props.addExtrato(extrato);
 		this.setState({
-			tipo: '',
+			tipo: 'E',
 			descricao: '',
 			valor: ''
 		});
@@ -39,7 +39,10 @@ export class Adicionar extends Component {
 						<Form onSubmit={this.onSubmit}>
 							<FormGroup>
 								<Label for="tipo">Tipo Movimentação</Label>
-								<Input name="tipo" onChange={this.onChange} value={tipo} />
+								<Input type="select" name="tipo" onChange={this.onChange} value={tipo}>
+									<option value="E">Entrada</option>
+									<option value="S">Saída</option>
+								</Input>
 							</FormGroup>
 							<FormGroup>
 								<Label for="descricao">Descrição</Label>
