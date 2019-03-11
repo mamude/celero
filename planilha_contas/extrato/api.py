@@ -19,7 +19,7 @@ class MovimentacaoViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def saldo(self, request):
-        saldo = Movimentacao.objects.all().aggregate(Sum('valor'))
+        saldo = Movimentacao.objects.filter(user=request.user).aggregate(Sum('valor'))
         return Response({
             'saldo': formatar_valor(saldo['valor__sum'])
         })

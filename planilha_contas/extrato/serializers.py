@@ -1,8 +1,7 @@
 import locale
 from rest_framework import serializers
 from .models import Movimentacao, TIPO_MOVIMENTO
-from .utils import formatar_valor
-
+from .utils import formatar_valor, formatar_data
 
 # Movimentacao
 class MovimentacaoSerializer(serializers.ModelSerializer):
@@ -12,22 +11,12 @@ class MovimentacaoSerializer(serializers.ModelSerializer):
     
     def to_representation(self, obj):
         # formatar moeda padrão brasileiro
-        try:
-            valor = formatar_valor(obj.valor)
-        except:
-            valor = formatar_valor(float(obj.valor))
-
+        valor = formatar_valor(obj.valor)        
         # formatar data padrão brasileiro
-        data = obj.data.strftime('%d/%m/%Y %H:%M:%S %Z')
-
+        data = formatar_data(obj.data)
         # formatar tipo de movimentação
-        tipo = [t for t in TIPO_MOVIMENTO if t[0] == obj.tipo]
-        try:
-            # leitura
-            tipo = tipo[0][1]
-        except:
-            # gravacao, não realizar nenhum tratamento (bug de conversão para negativo)
-            pass
+        tipo = [t for t in TIPO_MOVIMENTO if t[0] == obj.tipo]    
+        tipo = tipo[0][1]        
         
         # retornar nova estrutura
         return {
@@ -38,8 +27,10 @@ class MovimentacaoSerializer(serializers.ModelSerializer):
             'valor': valor
         }  
 
-    def to_internal_value(self, data):
-        # se a movimentação for tipo `Saída`, salvar o valor negativo
-        if data['tipo'] == 'S':
+    def to_internal_value(self, data):        
+        if data['valor'] and data['tipo'] == 'S':
             data['valor'] = -float(data['valor'])
-        return data
+            return data
+        else:
+            data = super().to_internal_value(data)
+            return data

@@ -1,28 +1,36 @@
 import React, { Component, Fragment } from 'react';
-import { Card, CardBody, CardTitle, Table, Button } from 'reactstrap';
+import { Card, CardBody, CardTitle, Table, Button, Badge } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getExtratos, deleteExtrato } from './../../actions/extratos';
+import { getExtratos, deleteExtrato, getSaldo } from './../../actions/extratos';
 
 export class Listar extends Component {
 	static propTypes = {
-		extratos: PropTypes.array.isRequired,
-		getExtratos: PropTypes.func.isRequired,
+		extratos: PropTypes.array.isRequired,				
+		getExtratos: PropTypes.func.isRequired,	
+		getSaldo: PropTypes.func.isRequired,	
 		deleteExtrato: PropTypes.func.isRequired
 	};
 
 	componentDidMount() {
 		this.props.getExtratos();
+		this.props.getSaldo();		
 	}
 
-	render() {
+	render() {		
+		const { saldo } = this.props;
+		var valor = '';
+		if (saldo !== undefined) {
+			valor = saldo.saldo;
+		}
 		return (
 			<Fragment>
 				<div className="col-md-10 pt-5 m-auto">
 					<Card>
 						<CardBody>
 							<CardTitle>
-								<strong>Extrato diário</strong>
+								<strong>Extrato diário</strong><br/>
+								<Badge>Saldo: {valor}</Badge>
 							</CardTitle>
 							<Table bordered>
 								<thead>
@@ -46,8 +54,7 @@ export class Listar extends Component {
 											<td>
 												<Button
 													color="danger"
-													onClick={this.props.deleteExtrato.bind(this, et.id)}
-												>
+													onClick={this.props.deleteExtrato.bind(this, et.id)}>
 													Apagar
 												</Button>
 											</td>
@@ -64,7 +71,8 @@ export class Listar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	extratos: state.extratos.extratos
+	extratos: state.extratos.extratos,
+	saldo: state.extratos.saldo
 });
 
-export default connect(mapStateToProps, { getExtratos, deleteExtrato })(Listar);
+export default connect(mapStateToProps, { getExtratos, deleteExtrato, getSaldo })(Listar);

@@ -1,4 +1,4 @@
-import { GET_EXTRATOS, DELETE_EXTRATO } from '../actions/types.js';
+import { GET_EXTRATOS, DELETE_EXTRATO, GET_SALDO } from '../actions/types.js';
 import { ADD_EXTRATO } from './../actions/types';
 
 const initialState = {
@@ -7,10 +7,15 @@ const initialState = {
 
 export default function(state = initialState, action) {
 	switch (action.type) {
-		case GET_EXTRATOS:
+		case GET_EXTRATOS:		
 			return {
 				...state,
 				extratos: action.payload
+			};
+		case GET_SALDO:
+			return {
+				...state,
+				saldo: action.payload
 			};
 		case ADD_EXTRATO:
 			return {
