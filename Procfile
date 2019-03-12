@@ -1,1 +1,1 @@
-web: python planilha_contas/manage.py runserver 0.0.0.0:5000
+web: python planilha_contas/manage.py runserver
