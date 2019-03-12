@@ -133,3 +133,7 @@ USE_TZ = False
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+# Deployment Heroku
+import django_heroku
+django_heroku.settings(locals())
