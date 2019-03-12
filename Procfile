@@ -1,1 +1,1 @@
-web: gunicorn celero.wsgi --log-file -
+web: gunicorn planilha_contas.wsgi --log-file -
