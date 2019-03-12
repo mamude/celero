@@ -1,1 +1,1 @@
-web: python planilha_contas/manage.py runserver
+web: python planilha_contas/manage.py runserver "0.0.0.0:$PORT"
