@@ -2,6 +2,7 @@ from django.db.models import Sum
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from decimal import Decimal
 from .serializers import MovimentacaoSerializer
 from .models import Movimentacao
 from .utils import formatar_valor
@@ -14,12 +15,15 @@ class MovimentacaoViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.request.user.movimentacoes.all()
     
-    def perform_create(self, serializer):        
+    def perform_create(self, serializer):
         serializer.save(user=self.request.user)   
-
+        
     @action(detail=False)
     def saldo(self, request):
         saldo = Movimentacao.objects.filter(user=request.user).aggregate(Sum('valor'))
+        valor = formatar_valor(Decimal('0.00'))
+        if saldo['valor__sum'] is not None:
+            valor = formatar_valor(saldo['valor__sum'])
         return Response({
-            'saldo': formatar_valor(saldo['valor__sum'])
+            'saldo': valor
         })

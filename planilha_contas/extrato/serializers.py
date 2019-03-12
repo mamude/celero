@@ -1,4 +1,5 @@
 import locale
+from decimal import InvalidOperation
 from rest_framework import serializers
 from .models import Movimentacao, TIPO_MOVIMENTO
 from .utils import formatar_valor, formatar_data
@@ -25,12 +26,4 @@ class MovimentacaoSerializer(serializers.ModelSerializer):
             'tipo': tipo,
             'descricao': obj.descricao,
             'valor': valor
-        }  
-
-    def to_internal_value(self, data):        
-        if data['valor'] and data['tipo'] == 'S':
-            data['valor'] = -float(data['valor'])
-            return data
-        else:
-            data = super().to_internal_value(data)
-            return data
+        } 
