@@ -1,1 +1,1 @@
-web: gunicorn celero.wsgi --log-file
+web: gunicorn celero.wsgi --log-file -
