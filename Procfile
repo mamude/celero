@@ -1,1 +1,1 @@
-web: gunicorn planilha_contas.wsgi --log-file -
+web: python planilha_contas/manage.py runserver 0.0.0.0:5000
