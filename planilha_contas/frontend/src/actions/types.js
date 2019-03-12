@@ -1,4 +1,5 @@
 export const GET_EXTRATOS = 'GET_EXTRATOS';
+export const GET_EXTRATOS_ORDER = 'GET_EXTRATOS_ORDER';
 export const DELETE_EXTRATO = 'DELETE_EXTRATO';
 export const ADD_EXTRATO = 'ADD_EXTRATO';
 export const GET_SALDO = 'GET_SALDO';

@@ -1,15 +1,28 @@
 import axios from 'axios';
-import { GET_EXTRATOS, ADD_EXTRATO, DELETE_EXTRATO, GET_SALDO } from './types';
+import { GET_EXTRATOS, ADD_EXTRATO, DELETE_EXTRATO, GET_SALDO, GET_EXTRATOS_ORDER } from './types';
 import { tokenConfig } from './auth';
 import { returnErrors, createMessage } from './messages';
 
-// Recuperar Extratos via Rest API
+// Listar Movimentações
 export const getExtratos = () => (dispatch, getState) => {
 	axios
 		.get('/api/extrato/', tokenConfig(getState))
 		.then((response) => {
 			dispatch({
 				type: GET_EXTRATOS,
+				payload: response.data
+			});
+		})
+		.catch((err) => dispatch(returnErrors(err.response.data, err.response.status)));
+};
+
+// Listar Movimentações Ordenada
+export const getExtratosOrdenado = (ordernacao) => (dispatch, getState) => {
+	axios
+		.get(`/api/extrato/order/?${ordernacao}`, tokenConfig(getState))
+		.then((response) => {
+			dispatch({
+				type: GET_EXTRATOS_ORDER,
 				payload: response.data
 			});
 		})
